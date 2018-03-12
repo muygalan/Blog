@@ -13,7 +13,7 @@
       <div class="post-tags">
         {% if page.tags.size > 0 %}
           {% for tag in page.tags  %}
-            <a href="{{ "tags#" | append: tag | absolute_url }}" class="post-tag">{{ tag }}</a>
+            <a href="{{ "tags#" | append: tag | relative_url }}" class="post-tag">{{ tag }}</a>
           {% endfor %}
         {% endif %}
       </div>
@@ -52,7 +52,7 @@
   <section class="author-detail">
     <section class="post-footer-item author-card">
       <div class="avatar">
-        <img src="{{ site.avatar | absolute_url }}" alt="">
+        <img src="{{ site.avatar | relative_url }}" alt="">
       </div>
       <div class="author-name" rel="author">{{ site.author }}</div>
       <div class="bio">
@@ -73,7 +73,7 @@
     <section class="post-footer-item read-next">
       {% if page.next.url %}
       <div class="read-next-item">
-        <a href="{{ page.next.url }}" class="read-next-link"></a>
+        <a href="{{ site.baseurl }}{{ page.next.url }}" class="read-next-link"></a>
         <section>
           <span>{{ page.next.title }}</span>
           <p>{{ page.next.excerpt | strip_html | strip_newlines | truncate: 60}}</p>
@@ -87,7 +87,7 @@
 
       {% if page.previous.url %}
       <div class="read-next-item">
-        <a href="{{ page.previous.url }}" class="read-next-link"></a>
+        <a href="{{ site.baseurl }}{{ page.previous.url }}" class="read-next-link"></a>
           <section>
             <span>{{ page.previous.title }}</span>
             <p>{{ page.previous.excerpt | strip_html | strip_newlines | truncate: 60}}</p>
@@ -162,7 +162,7 @@
 
   {% include footer.html %}
 
-  <script src="/assets/js/social-share.min.js"></script>
+  <script src="{{ site.baseurl }}/assets/js/social-share.min.js"></script>
   <script>
     socialShare('.social-share', {
       sites: [
@@ -216,8 +216,8 @@
 </script>
 
   <noscript>为正常使用评论功能请激活JavaScript。</noscript>
-  <script src="/assets/js/prism.js"></script>
-  <script src="/assets/js/index.min.js"></script>
+  <script src="{{ site.baseurl }}/assets/js/prism.js"></script>
+  <script src="{{ site.baseurl }}/assets/js/index.min.js"></script>
 </body>
 
 </html>

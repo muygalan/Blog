@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backing up files up with Symbolic Links - Blog – Joshua Galan</title>
+    <meta name="author"  content="Joshua Galan">
+    <meta name="description" content="Backing up files up with Symbolic Links">
+    <meta name="keywords"  content="windows, terminal">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Backing up files up with Symbolic Links - Blog – Joshua Galan">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://localhost:4000/2018/03/10/symbolic-links.html">
+    <meta property="og:description" content="A personal blog that covers code, self-improvement, and geeky tutorials.">
+    <meta property="og:site_name" content="Blog – Joshua Galan">
+    <link rel="stylesheet" href="//cdn.staticfile.org/normalize/6.0.0/normalize.min.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_roc50gemkxpw4s4i.css">
+    <link rel="stylesheet" href="/blog/assets/css/github-markdown.css">
+    <link rel="stylesheet" href="/blog/assets/css/prism.css">
+    <link rel="stylesheet" href="/blog/assets/css/share.min.css">
+    <link rel="stylesheet" href="/blog/assets/css/app.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Favicon head tag -->
+    <link rel="icon" href="/blog/favicon.ico" type="image/x-icon">
+	
+    <!--
+Author: Ray-Eldath
+-->
+<style>
+    .markdown-body .anchor{
+        float: left;
+        margin-top: -8px;
+        margin-left: -20px;
+        padding-right: 4px;
+        line-height: 1;
+        opacity: 0;
+    }
+    
+    .markdown-body .anchor .anchor-icon{
+        font-size: 15px
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        let nodes = document.querySelector(".markdown-body").querySelectorAll("h1,h2,h3")
+        for(let node of nodes) {
+            var anchor = document.createElement("a")
+            var anchorIcon = document.createElement("i")
+            anchorIcon.setAttribute("class", "fa fa-anchor fa-lg anchor-icon")
+            anchorIcon.setAttribute("aria-hidden", true)
+            anchor.setAttribute("class", "anchor")
+            anchor.setAttribute("href", "#" + node.getAttribute("id"))
+            
+            anchor.onmouseover = function() {
+                this.style.opacity = "0.4"
+            }
+            
+            anchor.onmouseout = function() {
+                this.style.opacity = "0"
+            }
+            
+            anchor.appendChild(anchorIcon)
+            node.appendChild(anchor)
+        }
+    })
+</script>
+</head>
+
+
+<body>
+  <!--[if lt IE 10]>
+<div class="alert-danger" role="alert">你的浏览器实在太太太旧了，放学别走，升级完浏览器再说！<a target="_blank" class="alert-link" href="http://browsehappy.com">立即升级</a></div>
+<![endif]-->
+  <input id="nm-switch" type="hidden" value="false"> <header class="g-header">
+    <div class="g-logo">
+      <a href="/blog/"></a>
+    </div>
+    <i id="menu-toggle" class="iconfont icon-menu"></i>
+    <nav class="g-nav">
+        <ul>
+            
+            <li><a href="/blog">home</a></li>
+            
+            <li><a href="/blog/tags.html">tags</a></li>
+            
+        </ul>
+    </nav>
+</header>
+
+
+  <header class="g-banner post-header post-pattern-circuitBoard bgcolor-default " data-theme="default">
+    <div class="post-wrapper">
+      <div class="post-tags">
+        
+          
+            <a href="/blog/tags#windows" class="post-tag">windows</a>
+          
+            <a href="/blog/tags#terminal" class="post-tag">terminal</a>
+          
+        
+      </div>
+      <h1>Backing up files up with Symbolic Links</h1>
+      <div class="post-meta">
+        <span class="post-meta-item"><i class="iconfont icon-author"></i><a href="http://localhost:4000" target="_blank" rel="author">Joshua Galan</a></></span>
+        <time class="post-meta-item" datetime="18-03-10"><i class="iconfont icon-date"></i>10 Mar 2018</time>
+      </div>
+    </div>
+    
+    <div class="filter"></div>
+      <div class="post-cover" style="background: url('/blog/assets/img/symbolic-links/header.png') center no-repeat; background-size: cover;"></div>
+    
+  </header>
+
+  <div class="post-content visible">
+    
+
+    <article class="markdown-body">
+      <blockquote>
+  <p>Today I will teach you how your files can exist in two places at once.</p>
+</blockquote>
+
+<p>Being organized and having things easily accessible is crucial to my work flow. I truly loathe not being able to locate something in a punctual manner because it subtracts from the time I can be doing something productive.  As someone who works from his laptop often as an autodidact, it’s imperative I’m able to preserve my motivation and kick things into gear with minimal effort.</p>
+
+<p>One of the ways I accomplish this is by pinning my most frequently used folders and applications to my Windows start menu. By simply tapping the Windows key, I’m instantly greeted with a buffet of my favorites. One of which, happens to be my <strong>Web Design</strong> folder, which contains the majority of my code-related projects.</p>
+
+<p><img src="/blog/assets/img/symbolic-links/winmenu.png" alt="" /></p>
+
+<p>Although this achieves my main purpose, the paranoia and OCD in me prefers to up the ante. I want to be able to have these files backed up on my cloud in case I want to access them from another computer or my laptop takes a nose dive. I’m sure anyone who’s had the misfortune of losing digital work wishes they had a duplicate stored safely somewhere else.</p>
+
+<h2 id="symbolic-links">Symbolic Links</h2>
+
+<p>One of my favorite methods for file backups involves synchronizing my files in real-time with Dropbox by using symbolic links.</p>
+
+<p>Symbolic links are files that reference to another file or folder. Think of it as a “shortcut” for your files that you can access from a different location. Any changes made to files contained within a symbolic link folder will also apply to a secondary folder of your choosing. I prefer to synchronize my PC folders with Dropbox for accessibility from my mobile device or another computer.</p>
+
+<h2 id="setting-up-your-links-windows">Setting Up Your Links (Windows)</h2>
+<h3 id="1-open-command-prompt-as-administrator">1. Open Command Prompt as Administrator.</h3>
+<p>This can be achieved by pressing the Windows Key + X and clicking on Command Prompt (Admin) or performing a search for Command Prompt, right-clicking it and Run as Administrator when finding it.</p>
+
+<p><img src="/blog/assets/img/symbolic-links/cmd-admin.png" alt="" />
+<em>Windows Key + X then click on Command Prompt (Admin)</em></p>
+
+<h3 id="2-establishing-folders-to-be-synced">2. Establishing folders to be synced.</h3>
+<p>With Command Prompt open, we’re going to first type <code class="highlighter-rouge">move</code> followed by the path for the folder you want to sync. Then type in the path to your Dropbox folder. Remember to use quotations for both paths.</p>
+
+<p><code class="highlighter-rouge">move “C:\Path\To\PCFolder” “C:\Users\NAME\DropBox”</code></p>
+
+<p><img src="/blog/assets/img/symbolic-links/cmd-move.png" alt="" />
+<em>This is how it looks on my terminal. (I’m moving a “Sample Folder” located in My Documents to Dropbox.)</em></p>
+
+<h3 id="3-syncing-your-folders">3. Syncing your folders</h3>
+<p>Now we’re going to create a symbolic link for the original folder moved from your PC to the one currently on your Dropbox. Type in the below command (modifying your paths accordingly) into Command Prompt. After this process is complete you will have two identical folders (one on your PC and the other on Dropbox) that are both synchronized to each other.</p>
+
+<p><code class="highlighter-rouge">mklink /d “C:\Path\To\PCFolder” “C:\Users\NAME\Dropbox\PCFolder”</code></p>
+
+<p><img src="/blog/assets/img/symbolic-links/cmd-sync.png" alt="" />
+<em>In this example, both my Sample Folder (located on my computer) and a copy of the Sample Folder have been synchronized on my Dropbox account. Whatever I modify inside the Sample Folder will now be available in both locations.</em></p>
+
+<h3 id="example-use-cases">Example Use Cases</h3>
+<p>Below are a few ideas on how you may benefit from symbolic links with 
+cloud synchronization.</p>
+
+<ul>
+  <li>
+    <p><strong>Photos</strong> 
+Whether you’re a photographer, graphic designer, or just want to keep track of your images — your files will be available on the cloud.</p>
+  </li>
+  <li>
+    <p><strong>Word / Excel</strong> 
+Are you typing up an essay or an important contract? How about crunching numbers for your business or personal spreadsheet? This method will save a duplicate copy.</p>
+  </li>
+  <li>
+    <p><strong>Code Editing</strong> 
+This is my primary reason for using this symbolic links. Whenever I edit a file related to code (HTML/CSS/JavaScript); I know I’ll have a copy automatically synced to Dropbox.</p>
+  </li>
+</ul>
+
+<p>Keep in mind you can use symbolic links for any files you wish. One caveat to consider is be cognizant of how much storage space is available on your Dropbox account in relation to the size of the files you’re synchronizing.</p>
+
+<hr />
+
+<p>Did you find this article interesting or useful? Show me love by liking, sharing, or commenting!</p>
+
+<p>Want to stay updated on my future blog articles? Subscribe to my e-mail list below.</p>
+
+    </article>
+
+    
+
+    
+    <div class="social-share-wrapper">
+      <div class="social-share"></div>
+    </div>
+    
+  </div>
+
+  <section class="author-detail">
+    <section class="post-footer-item author-card">
+      <div class="avatar">
+        <img src="/blog/assets/img/joshua.png" alt="">
+      </div>
+      <div class="author-name" rel="author">Joshua Galan</div>
+      <div class="bio">
+        <p>Entrepreneur. Coding Novice. Hip-Hop Lover. Creative thinker currently working on excellence.</p>
+      </div>
+      
+      <ul class="sns-links">
+        
+        <li>
+          <a href="mailto:hello@joshuagalan.com" target="_blank">
+                    <i class="iconfont icon-email"></i>
+                </a>
+        </li>
+        
+        <li>
+          <a href="//www.twitter.com/muygalan" target="_blank">
+                    <i class="iconfont icon-twitter"></i>
+                </a>
+        </li>
+        
+        <li>
+          <a href="//www.instagram.com/muygalan" target="_blank">
+                    <i class="iconfont icon-instagram"></i>
+                </a>
+        </li>
+        
+        <li>
+          <a href="//www.github.com/muygalan" target="_blank">
+                    <i class="iconfont icon-github"></i>
+                </a>
+        </li>
+        
+      </ul>
+      
+    </section>
+    <section class="post-footer-item read-next">
+      
+
+      
+    </section>
+      
+    <section class="post-footer-item comment">
+        
+        
+        <div class="comment-inner">
+            
+            <div id="disqus_thread"></div>
+            
+        
+            
+        </div>
+    </section>
+      
+    
+    
+  </section>
+
+  
+  <!--
+Author: Ray-Eldath
+refer to:
+ - https://github.com/theme-next/hexo-theme-next/blob/master/source/js/src/utils.js
+ - https://jingyan.baidu.com/article/b2c186c83ec846c46ef6ff80.html
+ - http://www.bkjia.com/jQuery/449205.html
+-->
+<style media="screen">
+  .scroll {
+    opacity: 0.8;
+    z-index: 10000;
+    display: none;
+    color: #fff;
+    line-height: 22px;
+    text-align: center;
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    cursor: pointer;
+    font-size: 13px;
+    padding-bottom: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+</style>
+<div class="scroll bgcolor-default">
+  <i class="fa fa-arrow-up" aria-hidden="true"></i>
+  <span class="scrollpercent">
+      <span class="inner"></span>
+      %
+    </span>
+</div>
+
+<script src="/assets/js/util.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    if (utils.isMobile()) {
+      $('.scroll').hide();
+      return;
+    }
+    $(window).scroll(function() {
+      let scrollValue = $(window).scrollTop();
+
+      var scrollPercentRounded = Math.round((scrollValue / utils.getContentVisibilityHeight()) * 100);
+      var scrollPercentMaxed = (scrollPercentRounded > 100) ? 100 : scrollPercentRounded;
+
+      $('.scrollpercent .inner').html(scrollPercentMaxed);
+      scrollValue > 100 ? $('.scroll').fadeIn() : $('.scroll').fadeOut();
+    });
+
+    $('.scroll').click(function() {
+      $('html, body').animate({
+        scrollTop: 0
+      }, 300);
+    })
+  })
+</script>
+
+
+
+<footer class="g-footer">
+  <section>Blog – Joshua Galan ©
+  
+  
+  2018
+  </section>
+  <section>Powered by <a href="//jekyllrb.com">Jekyll</a> | <a href="https://github.com/kaeyleo/jekyll-theme-H2O">Theme H2O</a></section>
+</footer>
+
+
+  <script src="/blog/assets/js/social-share.min.js"></script>
+  <script>
+    socialShare('.social-share', {
+      sites: [
+        
+          'facebook'
+          ,
+          
+        
+          'twitter'
+          ,
+          
+        
+          'google'
+          ,
+          
+        
+          'linkedin'
+          
+        
+      ],
+      wechatQrcodeTitle: "分享到微信朋友圈",
+      wechatQrcodeHelper: '<p>扫码后点击右上角</p><p>将本文分享至朋友圈</p>'
+    });
+  </script>
+
+  <script>
+    
+    /**
+     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+      var d = document,
+        s = d.createElement('script');
+      s.src = 'https://blog-joshua-galan.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+    
+      (d.head || d.body).appendChild(s);
+    })();
+    
+    
+    
+</script>
+
+  <noscript>为正常使用评论功能请激活JavaScript。</noscript>
+  <script src="/blog/assets/js/prism.js"></script>
+  <script src="/blog/assets/js/index.min.js"></script>
+</body>
+
+</html>
