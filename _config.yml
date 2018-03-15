@@ -4,7 +4,7 @@ description: A personal blog that covers code, self-improvement, and geeky tutor
 keyword: Joshua Galan, lifestyle, self-improvement, mental health, fitness, motivational,
   food recipes, technology, windows, computer, code, html, css, javascript, front end, front-end 
   development.
-url: 'muygalan.github.io' # your host
+url: 'http://www.joshuagalan.com/blog' # your host
 
 # if you don't need baseurl, you should leave this value blank.
 baseurl: /blog
@@ -117,3 +117,4 @@ plugins:
   - jekyll-analytics
   - jekyll-admin
   - jekyll-seo-tag
+  - jekyll-feed

@@ -15,7 +15,7 @@ One of the ways I accomplish this is by pinning my most frequently used folders 
 
 ![](/blog/assets/img/symbolic-links/winmenu.png)
 
-Although this achieves my main purpose, the paranoia and OCD in me prefers to up the ante. I want to be able to have these files backed up on my cloud in case I want to access them from another computer or my laptop takes a nose dive. I'm sure anyone who's had the misfortune of losing digital work wishes they had a duplicate stored safely somewhere else.
+Although this achieves my main purpose, the paranoia and OCD in me prefers to up the ante. I want to be able to have these files backed up on my cloud in case I want to access them from another computer or if my laptop takes a nose dive. I'm sure anyone who's had the misfortune of losing digital work wishes they had a duplicate stored safely somewhere else.
 
 ## Symbolic Links 
 
@@ -63,6 +63,6 @@ Keep in mind you can use symbolic links for any files you wish. One caveat to co
 
 ---
 
-Did you find this article interesting or useful? Show me love by liking, sharing, or commenting!
+Did you find this article interesting or useful? Show me love by sharing it or commenting!
 
 Want to stay updated on my future blog articles? Subscribe to my e-mail list below.

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:57279/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:57279/blog/" rel="alternate" type="text/html" /><updated>2018-03-14T20:46:46-04:00</updated><id>http://localhost:57279/blog/</id><title type="html">Blog – Joshua Galan</title><subtitle>A personal blog that covers code, self-improvement, and geeky tutorials.</subtitle><author><name>Joshua Galan</name></author><entry><title type="html">Backing up files up with Symbolic Links</title><link href="http://localhost:57279/blog/2018/03/10/symbolic-links.html" rel="alternate" type="text/html" title="Backing up files up with Symbolic Links" /><published>2018-03-10T00:00:00-05:00</published><updated>2018-03-10T00:00:00-05:00</updated><id>http://localhost:57279/blog/2018/03/10/symbolic-links</id><content type="html" xml:base="http://localhost:57279/blog/2018/03/10/symbolic-links.html">&lt;blockquote&gt;
+  &lt;p&gt;Today I will teach you how your files can exist in two places at once.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Being organized and having things easily accessible is crucial to my work flow. I truly loathe not being able to locate something in a punctual manner because it subtracts from the time I can be doing something productive.  As someone who works from his laptop often as an autodidact, it’s imperative I’m able to preserve my motivation and kick things into gear with minimal effort.&lt;/p&gt;
+
+&lt;p&gt;One of the ways I accomplish this is by pinning my most frequently used folders and applications to my Windows start menu. By simply tapping the Windows key, I’m instantly greeted with a buffet of my favorites. One of which, happens to be my &lt;strong&gt;Web Design&lt;/strong&gt; folder, which contains the majority of my code-related projects.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/assets/img/symbolic-links/winmenu.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Although this achieves my main purpose, the paranoia and OCD in me prefers to up the ante. I want to be able to have these files backed up on my cloud in case I want to access them from another computer or if my laptop takes a nose dive. I’m sure anyone who’s had the misfortune of losing digital work wishes they had a duplicate stored safely somewhere else.&lt;/p&gt;
+
+&lt;h2 id=&quot;symbolic-links&quot;&gt;Symbolic Links&lt;/h2&gt;
+
+&lt;p&gt;One of my favorite methods for file backups involves synchronizing my files in real-time with Dropbox by using symbolic links.&lt;/p&gt;
+
+&lt;p&gt;Symbolic links are files that reference to another file or folder. Think of it as a “shortcut” for your files that you can access from a different location. Any changes made to files contained within a symbolic link folder will also apply to a secondary folder of your choosing. I prefer to synchronize my PC folders with Dropbox for accessibility from my mobile device or another computer.&lt;/p&gt;
+
+&lt;h2 id=&quot;setting-up-your-links-windows&quot;&gt;Setting Up Your Links (Windows)&lt;/h2&gt;
+&lt;h3 id=&quot;1-open-command-prompt-as-administrator&quot;&gt;1. Open Command Prompt as Administrator.&lt;/h3&gt;
+&lt;p&gt;This can be achieved by pressing the Windows Key + X and clicking on Command Prompt (Admin) or performing a search for Command Prompt, right-clicking it and Run as Administrator when finding it.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/assets/img/symbolic-links/cmd-admin.png&quot; alt=&quot;&quot; /&gt;
+&lt;em&gt;Windows Key + X then click on Command Prompt (Admin)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2-establishing-folders-to-be-synced&quot;&gt;2. Establishing folders to be synced.&lt;/h3&gt;
+&lt;p&gt;With Command Prompt open, we’re going to first type &lt;code class=&quot;highlighter-rouge&quot;&gt;move&lt;/code&gt; followed by the path for the folder you want to sync. Then type in the path to your Dropbox folder. Remember to use quotations for both paths.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;move “C:\Path\To\PCFolder” “C:\Users\NAME\DropBox”&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/assets/img/symbolic-links/cmd-move.png&quot; alt=&quot;&quot; /&gt;
+&lt;em&gt;This is how it looks on my terminal. (I’m moving a “Sample Folder” located in My Documents to Dropbox.)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3-syncing-your-folders&quot;&gt;3. Syncing your folders&lt;/h3&gt;
+&lt;p&gt;Now we’re going to create a symbolic link for the original folder moved from your PC to the one currently on your Dropbox. Type in the below command (modifying your paths accordingly) into Command Prompt. After this process is complete you will have two identical folders (one on your PC and the other on Dropbox) that are both synchronized to each other.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mklink /d “C:\Path\To\PCFolder” “C:\Users\NAME\Dropbox\PCFolder”&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/blog/assets/img/symbolic-links/cmd-sync.png&quot; alt=&quot;&quot; /&gt;
+&lt;em&gt;In this example, both my Sample Folder (located on my computer) and a copy of the Sample Folder have been synchronized on my Dropbox account. Whatever I modify inside the Sample Folder will now be available in both locations.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;example-use-cases&quot;&gt;Example Use Cases&lt;/h3&gt;
+&lt;p&gt;Below are a few ideas on how you may benefit from symbolic links with 
+cloud synchronization.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Photos&lt;/strong&gt; 
+Whether you’re a photographer, graphic designer, or just want to keep track of your images — your files will be available on the cloud.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Word / Excel&lt;/strong&gt; 
+Are you typing up an essay or an important contract? How about crunching numbers for your business or personal spreadsheet? This method will save a duplicate copy.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;strong&gt;Code Editing&lt;/strong&gt; 
+This is my primary reason for using this symbolic links. Whenever I edit a file related to code (HTML/CSS/JavaScript); I know I’ll have a copy automatically synced to Dropbox.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Keep in mind you can use symbolic links for any files you wish. One caveat to consider is be cognizant of how much storage space is available on your Dropbox account in relation to the size of the files you’re synchronizing.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Did you find this article interesting or useful? Show me love by sharing it or commenting!&lt;/p&gt;
+
+&lt;p&gt;Want to stay updated on my future blog articles? Subscribe to my e-mail list below.&lt;/p&gt;</content><author><name>Joshua Galan</name></author><category term="windows" /><category term="terminal" /><summary type="html">Today I will teach you how your files can exist in two places at once.</summary></entry></feed>
